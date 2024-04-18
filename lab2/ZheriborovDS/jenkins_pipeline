@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Create Dataset') {
+            steps {
+                echo "----Create Dataset (begin)-----"
+                bat 'set PATH=%PATH%;C:\\Users\\Админ\\Python39\\'
+                bat 'call C:\\Users\\Админ\\PycharmProjects\\HW\\venv\\Scripts\\activate'
+                bat 'python C:\\Users\\Админ\\PycharmProjects\\HW\\get_data.py'
+                echo "----Create Dataset (end)-----"
+            }
+        }
+        stage('Process Data') {
+            steps {
+                bat 'python C:\\Users\\Админ\\PycharmProjects\\HW\\process_data.py'
+                echo "----Converting Data (Celsius to Fahrenheit) (end)-----"
+            }
+        }
+        stage('Split Data') {
+            steps {
+                bat 'python C:\\Users\\Админ\\PycharmProjects\\HW\\train_test_split_data.py'
+                echo "----Split data (end)-----"
+            }
+        }
+        stage('Train Model') {
+            steps {
+                bat 'python C:\\Users\\Админ\\PycharmProjects\\HW\\train_model.py'
+                echo "----Train and test data (end)-----"
+            }
+        }
+    }
+}
